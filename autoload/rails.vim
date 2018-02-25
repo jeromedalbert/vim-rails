@@ -4290,11 +4290,11 @@ function! s:BufAbbreviations()
       Rabbrev coo[ cookies
       Rabbrev fl[ flash
       Rabbrev rr( render
-      Rabbrev rf( render :file\ =>\ 
-      Rabbrev rj( render :json\ =>\ 
-      Rabbrev rp( render :partial\ =>\ 
-      Rabbrev rt( render :text\ =>\ 
-      Rabbrev rx( render :xml\ =>\ 
+      Rabbrev rf( render :file\ =>\
+      Rabbrev rj( render :json\ =>\
+      Rabbrev rp( render :partial\ =>\
+      Rabbrev rt( render :text\ =>\
+      Rabbrev rx( render :xml\ =>\
       " ))))))
     endif
     if buffer.type_name('view','helper')
@@ -4971,107 +4971,107 @@ function! rails#buffer_setup() abort
   let b:rails_cached_file_type = self.calculate_file_type()
   call s:BufMappings()
   call s:BufCommands()
-  if !empty(findfile('macros/rails.vim', escape(&runtimepath, ' ')))
-    runtime! macros/rails.vim
-  endif
-  silent doautocmd User Rails
-  call s:BufProjectionCommands()
-  call s:BufAbbreviations()
+  " if !empty(findfile('macros/rails.vim', escape(&runtimepath, ' ')))
+  "   runtime! macros/rails.vim
+  " endif
+  " silent doautocmd User Rails
+  " call s:BufProjectionCommands()
+  " call s:BufAbbreviations()
   call s:SetBasePath()
-  let rp = s:gsub(self.app().path(),'[ ,]','\\&')
-  if stridx(&tags,rp.'/tags') == -1
-    let &l:tags = rp . '/tags,' . rp . '/tmp/tags,' . &tags
-  endif
+  " let rp = s:gsub(self.app().path(),'[ ,]','\\&')
+  " if stridx(&tags,rp.'/tags') == -1
+  "   let &l:tags = rp . '/tags,' . rp . '/tmp/tags,' . &tags
+  " endif
   call self.setvar('&includeexpr','rails#includeexpr(v:fname)')
   call self.setvar('&suffixesadd', s:sub(self.getvar('&suffixesadd'),'^$','.rb'))
-  let ft = self.getvar('&filetype')
-  if ft =~# '^ruby\>'
-    call self.setvar('&define',self.define_pattern())
-    " This really belongs in after/ftplugin/ruby.vim but we'll be nice
-    if exists('g:loaded_surround') && self.getvar('surround_101') == ''
-      call self.setvar('surround_5',   "\r\nend")
-      call self.setvar('surround_69',  "\1expr: \1\rend")
-      call self.setvar('surround_101', "\r\nend")
-    endif
-    if exists(':UltiSnipsAddFiletypes') == 2
-      UltiSnipsAddFiletypes rails
-    elseif exists(':SnipMateLoadScope') == 2
-      SnipMateLoadScope rails
-    endif
-  elseif ft =~# 'yaml\>' || fnamemodify(self.name(),':e') ==# 'yml'
-    call self.setvar('&define',self.define_pattern())
-  elseif ft =~# '^eruby\>'
-    call self.setvar('&define',self.define_pattern())
-    if exists("g:loaded_ragtag")
-      call self.setvar('ragtag_stylesheet_link_tag', "<%= stylesheet_link_tag '\r' %>")
-      call self.setvar('ragtag_javascript_include_tag', "<%= javascript_include_tag '\r' %>")
-      call self.setvar('ragtag_doctype_index', 10)
-    endif
-  elseif ft =~# '^haml\>'
-    call self.setvar('&define',self.define_pattern())
-    if exists("g:loaded_ragtag")
-      call self.setvar('ragtag_stylesheet_link_tag', "= stylesheet_link_tag '\r'")
-      call self.setvar('ragtag_javascript_include_tag', "= javascript_include_tag '\r'")
-      call self.setvar('ragtag_doctype_index', 10)
-    endif
-  elseif ft =~# 'html\>'
-    call self.setvar('&define', '\<id=["'']\=')
-  endif
-  if ft =~# '^eruby\>' || ft =~# '^yaml\>'
-    if exists("g:loaded_surround")
-      if self.getvar('surround_45') == '' || self.getvar('surround_45') == "<% \r %>" " -
-        call self.setvar('surround_45', "<% \r %>")
-      endif
-      if self.getvar('surround_61') == '' " =
-        call self.setvar('surround_61', "<%= \r %>")
-      endif
-      if self.getvar("surround_35") == '' " #
-        call self.setvar('surround_35', "<%# \r %>")
-      endif
-      if self.getvar('surround_101') == '' || self.getvar('surround_101')== "<% \r %>\n<% end %>" "e
-        call self.setvar('surround_5',   "<% \r %>\n<% end %>")
-        call self.setvar('surround_69',  "<% \1expr: \1 %>\r<% end %>")
-        call self.setvar('surround_101', "<% \r %>\n<% end %>")
-      endif
-    endif
-  endif
+  " let ft = self.getvar('&filetype')
+  " if ft =~# '^ruby\>'
+  "   call self.setvar('&define',self.define_pattern())
+  "   " This really belongs in after/ftplugin/ruby.vim but we'll be nice
+  "   if exists('g:loaded_surround') && self.getvar('surround_101') == ''
+  "     call self.setvar('surround_5',   "\r\nend")
+  "     call self.setvar('surround_69',  "\1expr: \1\rend")
+  "     call self.setvar('surround_101', "\r\nend")
+  "   endif
+  "   if exists(':UltiSnipsAddFiletypes') == 2
+  "     UltiSnipsAddFiletypes rails
+  "   elseif exists(':SnipMateLoadScope') == 2
+  "     SnipMateLoadScope rails
+  "   endif
+  " elseif ft =~# 'yaml\>' || fnamemodify(self.name(),':e') ==# 'yml'
+  "   call self.setvar('&define',self.define_pattern())
+  " elseif ft =~# '^eruby\>'
+  "   call self.setvar('&define',self.define_pattern())
+  "   if exists("g:loaded_ragtag")
+  "     call self.setvar('ragtag_stylesheet_link_tag', "<%= stylesheet_link_tag '\r' %>")
+  "     call self.setvar('ragtag_javascript_include_tag', "<%= javascript_include_tag '\r' %>")
+  "     call self.setvar('ragtag_doctype_index', 10)
+  "   endif
+  " elseif ft =~# '^haml\>'
+  "   call self.setvar('&define',self.define_pattern())
+  "   if exists("g:loaded_ragtag")
+  "     call self.setvar('ragtag_stylesheet_link_tag', "= stylesheet_link_tag '\r'")
+  "     call self.setvar('ragtag_javascript_include_tag', "= javascript_include_tag '\r'")
+  "     call self.setvar('ragtag_doctype_index', 10)
+  "   endif
+  " elseif ft =~# 'html\>'
+  "   call self.setvar('&define', '\<id=["'']\=')
+  " endif
+  " if ft =~# '^eruby\>' || ft =~# '^yaml\>'
+  "   if exists("g:loaded_surround")
+  "     if self.getvar('surround_45') == '' || self.getvar('surround_45') == "<% \r %>" " -
+  "       call self.setvar('surround_45', "<% \r %>")
+  "     endif
+  "     if self.getvar('surround_61') == '' " =
+  "       call self.setvar('surround_61', "<%= \r %>")
+  "     endif
+  "     if self.getvar("surround_35") == '' " #
+  "       call self.setvar('surround_35', "<%# \r %>")
+  "     endif
+  "     if self.getvar('surround_101') == '' || self.getvar('surround_101')== "<% \r %>\n<% end %>" "e
+  "       call self.setvar('surround_5',   "<% \r %>\n<% end %>")
+  "       call self.setvar('surround_69',  "<% \1expr: \1 %>\r<% end %>")
+  "       call self.setvar('surround_101', "<% \r %>\n<% end %>")
+  "     endif
+  "   endif
+  " endif
 
-  compiler rails
-  let b:current_compiler = 'rake'
-  let &l:makeprg = self.app().rake_command('static')
-  let &l:errorformat .= ',chdir '.escape(self.app().path(), ',')
+  " compiler rails
+  " let b:current_compiler = 'rake'
+  " let &l:makeprg = self.app().rake_command('static')
+  " let &l:errorformat .= ',chdir '.escape(self.app().path(), ',')
 
-  if exists(':Dispatch') == 2 && !exists('g:autoloaded_dispatch')
-    runtime! autoload/dispatch.vim
-  endif
-  if exists('*dispatch#dir_opt')
-    let dir = dispatch#dir_opt(self.app().path())
-  endif
+  " if exists(':Dispatch') == 2 && !exists('g:autoloaded_dispatch')
+  "   runtime! autoload/dispatch.vim
+  " endif
+  " if exists('*dispatch#dir_opt')
+  "   let dir = dispatch#dir_opt(self.app().path())
+  " endif
 
-  let dispatch = self.projected('dispatch')
-  if !empty(dispatch) && exists(dir)
-    call self.setvar('dispatch', dir . dispatch[0])
-  elseif self.name() =~# '^public'
-    call self.setvar('dispatch', ':Preview')
-  elseif self.type_name('spec', 'cucumber')
-    call self.setvar('dispatch', ':Runner')
-  elseif self.type_name('test') && !self.app().has('rails5')
-    call self.setvar('dispatch', ':Runner')
-  elseif self.name() =~# '^\%(app\|config\|db\|lib\|log\|README\|Rakefile\|test\|spec\|features\)'
-    if !exists('dir')
-      call self.setvar('dispatch', ':Rails')
-    elseif self.app().has('rails5')
-      call self.setvar('dispatch',
-            \ dir .
-            \ self.app().ruby_script_command('bin/rails') .
-            \ ' `=rails#buffer(' . self['#'] . ').default_rake_task(v:lnum)`')
-    else
-      call self.setvar('dispatch',
-            \ dir . '-compiler=rails ' .
-            \ self.app().rake_command('static') .
-            \ ' `=rails#buffer(' . self['#'] . ').default_rake_task(v:lnum)`')
-    endif
-  endif
+  " let dispatch = self.projected('dispatch')
+  " if !empty(dispatch) && exists(dir)
+  "   call self.setvar('dispatch', dir . dispatch[0])
+  " elseif self.name() =~# '^public'
+  "   call self.setvar('dispatch', ':Preview')
+  " elseif self.type_name('spec', 'cucumber')
+  "   call self.setvar('dispatch', ':Runner')
+  " elseif self.type_name('test') && !self.app().has('rails5')
+  "   call self.setvar('dispatch', ':Runner')
+  " elseif self.name() =~# '^\%(app\|config\|db\|lib\|log\|README\|Rakefile\|test\|spec\|features\)'
+  "   if !exists('dir')
+  "     call self.setvar('dispatch', ':Rails')
+  "   elseif self.app().has('rails5')
+  "     call self.setvar('dispatch',
+  "           \ dir .
+  "           \ self.app().ruby_script_command('bin/rails') .
+  "           \ ' `=rails#buffer(' . self['#'] . ').default_rake_task(v:lnum)`')
+  "   else
+  "     call self.setvar('dispatch',
+  "           \ dir . '-compiler=rails ' .
+  "           \ self.app().rake_command('static') .
+  "           \ ' `=rails#buffer(' . self['#'] . ').default_rake_task(v:lnum)`')
+  "   endif
+  " endif
 endfunction
 
 " }}}1
