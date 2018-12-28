@@ -4986,8 +4986,10 @@ function! rails#buffer_setup() abort
   " if stridx(&tags,rp.'/tags') == -1
   "   let &l:tags = rp . '/tags,' . rp . '/tmp/tags,' . &tags
   " endif
-  call self.setvar('&includeexpr','rails#includeexpr(v:fname)')
-  call self.setvar('&suffixesadd', s:sub(self.getvar('&suffixesadd'),'^$','.rb'))
+  if self.name() !~# '\.\(erb\|haml\)$'
+    call self.setvar('&includeexpr','rails#includeexpr(v:fname)')
+    call self.setvar('&suffixesadd', s:sub(self.getvar('&suffixesadd'),'^$','.rb'))
+  endif
   " let ft = self.getvar('&filetype')
   " if ft =~# '^ruby\>'
   "   call self.setvar('&define',self.define_pattern())
